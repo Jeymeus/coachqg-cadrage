@@ -1,738 +1,727 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoachQG — Cadrage produit</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/tabler-icons.min.css">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-:root{
-  --bg:#05100a;--surface:#0b1a10;--card:#101e14;--card-h:#152319;
-  --border:rgba(255,255,255,0.07);--border-s:rgba(255,255,255,0.13);--border-acc:#2d7a47;
-  --text:#d8e8db;--muted:#6a8570;--dim:#2e4437;
-  --acc:#2d7a47;--acc-h:#358c52;--acc-bg:rgba(45,122,71,0.10);--acc-bg2:rgba(45,122,71,0.17);
-  --gold:#c9a84c;--gold-bg:rgba(201,168,76,0.08);--gold-b:rgba(201,168,76,0.22);
-  --r:10px;--rs:7px;
-}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',-apple-system,system-ui,sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 1rem 6rem}
-.topbar{width:100%;max-width:640px;display:flex;align-items:center;justify-content:space-between;padding:1.75rem 0 0;margin-bottom:2.75rem}
-.brand{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;letter-spacing:0.14em;color:var(--text)}
-.brand em{color:var(--gold);font-style:normal}
-.pill{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-b);background:var(--gold-bg);padding:4px 12px;border-radius:20px}
-.prog-wrap{width:100%;max-width:640px;margin-bottom:2.5rem;display:none}
-.prog-wrap.on{display:block}
-.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
-.prog-lbl{font-size:0.72rem;color:var(--muted);letter-spacing:.05em}
-.prog-pct{font-size:0.72rem;color:var(--acc);font-weight:500}
-.prog-track{height:1.5px;background:var(--border);border-radius:2px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--gold));border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.wrap{width:100%;max-width:640px}
-.step{display:none}
-.step.on{display:block;animation:up .35s ease}
-@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-/* intro */
-.intro-eye{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.1rem}
-.intro-h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:3.2rem;font-weight:300;line-height:1.1;margin-bottom:1.25rem}
-.intro-h1 em{font-style:italic;color:var(--gold)}
-.intro-body{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:2.5rem;max-width:460px}
-.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:3rem}
-.feat{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:16px}
-.feat-ico{width:34px;height:34px;border-radius:6px;background:var(--acc-bg);border:1px solid rgba(45,122,71,.22);display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:var(--acc);font-size:1rem}
-.feat-name{font-size:.85rem;font-weight:400;color:var(--text);margin-bottom:3px}
-.feat-sub{font-size:.71rem;color:var(--muted);line-height:1.45}
-/* q header */
-.q-eye{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:.6rem}
-.q-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.85rem;font-weight:300;line-height:1.22;margin-bottom:.65rem}
-.q-desc{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.75rem}
-/* options radio */
-.option{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);cursor:pointer;margin-bottom:8px;transition:border-color .15s,background .15s;user-select:none;-webkit-tap-highlight-color:transparent}
-.option:hover{border-color:var(--border-s);background:var(--card-h)}
-.option.sel{border-color:var(--border-acc);background:var(--acc-bg)}
-.rdot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border-s);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.option.sel .rdot{border-color:var(--acc);background:var(--acc)}
-.option.sel .rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;display:block}
-/* checkbox multi-select */
-.cbox{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border-s);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px;color:transparent}
-.option.sel .cbox{border-color:var(--acc);background:var(--acc);color:#fff}
-.opt-l{font-size:.9rem;font-weight:400;color:var(--text);line-height:1.4}
-.opt-s{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.45}
-/* optional checkbox row */
-.opt-sep{height:1px;background:var(--border);margin:10px 0}
-.opt-check-row{display:flex;align-items:center;gap:10px;padding:10px 4px;cursor:pointer;user-select:none}
-.opt-check-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border-s);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:10px;color:transparent}
-.opt-check-row.chkd .opt-check-box{border-color:var(--gold);background:var(--gold-bg);color:var(--gold)}
-.opt-check-lbl{font-size:.8rem;color:var(--muted)}
-.opt-check-row.chkd .opt-check-lbl{color:var(--text)}
-/* sub separator */
-.sub-sep{border-top:1px solid var(--border);margin:1.75rem 0 1.35rem;padding-top:1.35rem}
-.sub-lbl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
-/* extra / fields */
-.extra{margin-top:.75rem;display:none}
-.extra.on{display:block;animation:up .25s ease}
-.flabel{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
-.textarea-wrap{margin-top:1.1rem}
-input[type=text],input[type=number],textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);color:var(--text);padding:11px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:.875rem;font-weight:300;outline:none;transition:border-color .2s;caret-color:var(--acc)}
-input::placeholder,textarea::placeholder{color:var(--dim)}
-input:focus,textarea:focus{border-color:var(--border-acc)}
-textarea{min-height:76px;resize:vertical;line-height:1.65}
-/* nav */
-.nav{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:2.25rem}
-.nav.start{justify-content:flex-start}
-.btn-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:10px 18px;border-radius:var(--rs);font-family:'DM Sans',system-ui,sans-serif;font-size:.85rem;font-weight:300;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
-.btn-back:hover{border-color:var(--border-s);color:var(--text)}
-.btn-next{background:var(--acc);border:none;color:#fff;padding:10px 22px;border-radius:var(--rs);font-family:'DM Sans',system-ui,sans-serif;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.02em;display:flex;align-items:center;gap:6px}
-.btn-next:hover{background:var(--acc-h);transform:translateY(-1px)}
-.btn-next:disabled{opacity:.28;cursor:not-allowed;transform:none}
-.btn-cta{background:var(--acc);border:none;color:#fff;padding:13px 30px;border-radius:var(--rs);font-family:'DM Sans',system-ui,sans-serif;font-size:1rem;font-weight:400;cursor:pointer;transition:all .2s;letter-spacing:.03em;display:inline-flex;align-items:center;gap:8px}
-.btn-cta:hover{background:var(--acc-h);transform:translateY(-1px)}
-/* summary */
-.sum-top{text-align:center;margin-bottom:2.5rem;padding-top:.5rem}
-.sum-check{width:52px;height:52px;border-radius:50%;background:var(--acc-bg);border:1px solid var(--border-acc);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;color:var(--acc);font-size:1.25rem}
-.sum-h{font-family:'Cormorant Garamond',Georgia,serif;font-size:2.1rem;font-weight:300;margin-bottom:.5rem}
-.sum-sub{font-size:.85rem;color:var(--muted)}
-.ans-row{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:13px 16px;margin-bottom:7px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.ans-q{font-size:.7rem;color:var(--muted);margin-bottom:3px;letter-spacing:.03em}
-.ans-a{font-size:.875rem;color:var(--text);font-weight:400}
-.ans-ext{font-size:.75rem;color:var(--muted);margin-top:3px}
-.ans-tag{font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);background:var(--acc-bg);padding:3px 8px;border-radius:4px;border:1px solid rgba(45,122,71,.22);white-space:nowrap;flex-shrink:0;margin-top:1px}
-.btn-copy{width:100%;background:transparent;border:1px solid var(--border-acc);color:var(--acc);padding:13px;border-radius:var(--rs);font-family:'DM Sans',system-ui,sans-serif;font-size:.875rem;font-weight:400;cursor:pointer;transition:all .2s;margin-top:1.5rem;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-copy:hover{background:var(--acc-bg)}
-.btn-copy.ok{color:var(--text);border-color:var(--border)}
-.restart{display:block;text-align:center;margin-top:1.25rem;font-size:.78rem;color:var(--muted);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'DM Sans',system-ui,sans-serif;font-weight:300;width:100%}
-.restart:hover{color:var(--text)}
-.footer{margin-top:4rem;text-align:center;font-size:.68rem;color:var(--dim);letter-spacing:.08em}
-.footer strong{color:var(--muted);font-weight:400}
-@media(max-width:480px){.intro-h1{font-size:2.4rem}.q-title{font-size:1.55rem}.intro-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoachQG — Cadrage produit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="topbar">
+<!-- ─── Top Bar ─── -->
+<header class="topbar">
   <div class="brand">Coach<em>QG</em></div>
   <div class="pill">Cadrage V1</div>
-</div>
+</header>
 
-<div class="prog-wrap" id="pw">
-  <div class="prog-top">
-    <span class="prog-lbl" id="plbl">Question 1 / 10</span>
-    <span class="prog-pct" id="ppct">10%</span>
+<!-- ─── Progress ─── -->
+<div class="progress" id="progress">
+  <div class="progress__top">
+    <span class="progress__label" id="progress-label">Question 1 / 10</span>
+    <span class="progress__pct"   id="progress-pct">10%</span>
   </div>
-  <div class="prog-track"><div class="prog-fill" id="pfill" style="width:10%"></div></div>
-</div>
-
-<div class="wrap">
-
-<!-- ══ INTRO ══ -->
-<div class="step on" id="step-0">
-  <p class="intro-eye">Document de cadrage · Confidentiel</p>
-  <h1 class="intro-h1">Ton outil métier,<br><em>pensé avec toi</em></h1>
-  <p class="intro-body">Ce formulaire permet de cadrer CoachQG précisément selon ta façon de travailler. 10 questions ciblées, environ 5 minutes. Tes réponses structureront directement la logique de l'application.</p>
-  <div class="intro-grid">
-    <div class="feat"><div class="feat-ico"><i class="ti ti-calendar-event"></i></div><div class="feat-name">Planning intelligent</div><div class="feat-sub">Disponibilités & réservations en temps réel</div></div>
-    <div class="feat"><div class="feat-ico"><i class="ti ti-users"></i></div><div class="feat-name">Gestion des élèves</div><div class="feat-sub">Fiches, historique, carnets de séances</div></div>
-    <div class="feat"><div class="feat-ico"><i class="ti ti-brand-telegram"></i></div><div class="feat-name">Notifications Telegram</div><div class="feat-sub">Alertes réservations instantanées</div></div>
-    <div class="feat"><div class="feat-ico"><i class="ti ti-chart-line"></i></div><div class="feat-name">Suivi de fiabilité</div><div class="feat-sub">Annulations, no-shows, régularité</div></div>
-  </div>
-  <div class="nav start">
-    <button class="btn-cta" onclick="goTo(1)">Commencer <i class="ti ti-arrow-right"></i></button>
+  <div class="progress__track">
+    <div class="progress__fill" id="progress-fill" style="width: 10%"></div>
   </div>
 </div>
 
-<!-- ══ Q1 : Disponibilités ══ -->
-<div class="step" id="step-1">
-  <p class="q-eye">Question 1 / 10 · Planning</p>
-  <h2 class="q-title">Comment tu définis tes disponibilités ?</h2>
-  <p class="q-desc">Ce choix détermine l'architecture du module planning et la façon dont tes élèves consultent tes créneaux ouverts.</p>
-  <div id="opts-1">
-    <div class="option" onclick="sel(1,'recurrent','Plages récurrentes automatiques',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Plages récurrentes</div><div class="opt-s">Ex : chaque mardi de 9h à 12h — le système génère automatiquement les créneaux</div></div>
-    </div>
-    <div class="option" onclick="sel(1,'manuel','Saisie manuelle créneau par créneau',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Saisie manuelle</div><div class="opt-s">Tu ajoutes tes créneaux un par un directement dans le calendrier</div></div>
-    </div>
-    <div class="option" onclick="sel(1,'mixte','Mode mixte — récurrences + ajouts manuels',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Les deux — mode mixte</div><div class="opt-s">Base récurrente avec possibilité d'ajouter ou supprimer des créneaux ponctuels</div></div>
-    </div>
-    <div class="option" onclick="sel(1,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
+<!-- ─── Main Wrapper ─── -->
+<main class="wrap">
 
-  <div class="sub-sep">
-    <p class="sub-lbl">Sous-question · Type de séance et créneaux</p>
-    <p class="q-desc" style="margin-bottom:1rem">Un créneau disponible est-il associé à un type de séance, ou ton élève choisit le type lors de sa demande ?</p>
-    <div id="opts-1b">
-      <div class="option" onclick="selSub('1b','type_fixe','Créneau typé — chaque créneau correspond à un type (individuel, collectif…)',this);chk1()">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Créneau typé</div><div class="opt-s">Ce créneau = cours individuel. Cet autre = collectif. L'élève choisit selon ce qui est affiché.</div></div>
+  <!-- ══════════════════════════════════════
+       STEP 0 — Intro
+  ══════════════════════════════════════ -->
+  <section class="step active" id="step-0">
+    <p class="intro__eyebrow">Document de cadrage · Confidentiel</p>
+    <h1 class="intro__title">Ton outil métier,<br><em>pensé avec toi</em></h1>
+    <p class="intro__body">
+      Ce formulaire permet de cadrer CoachQG précisément selon ta façon de travailler.
+      10 questions ciblées, environ 5 minutes. Tes réponses structureront directement
+      la logique de l'application.
+    </p>
+    <div class="intro__grid">
+      <div class="feat">
+        <div class="feat__icon"><i class="ti ti-calendar-event"></i></div>
+        <div class="feat__name">Planning intelligent</div>
+        <div class="feat__sub">Disponibilités &amp; réservations en temps réel</div>
       </div>
-      <div class="option" onclick="selSub('1b','client_choisit','Créneau neutre — l\'élève précise le type souhaité lors de la demande',this);chk1()">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Créneau neutre</div><div class="opt-s">Tout créneau dispo = toute demande possible. L'élève précise individuel ou collectif au moment de réserver.</div></div>
+      <div class="feat">
+        <div class="feat__icon"><i class="ti ti-users"></i></div>
+        <div class="feat__name">Gestion des élèves</div>
+        <div class="feat__sub">Fiches, historique, carnets de séances</div>
       </div>
-      <div class="option" onclick="selSub('1b','mixte_type','Les deux selon les créneaux',this);chk1()">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Les deux selon les créneaux</div><div class="opt-s">Certains créneaux sont réservés à un type, d'autres restent libres</div></div>
+      <div class="feat">
+        <div class="feat__icon"><i class="ti ti-brand-telegram"></i></div>
+        <div class="feat__name">Notifications Telegram</div>
+        <div class="feat__sub">Alertes réservations instantanées</div>
+      </div>
+      <div class="feat">
+        <div class="feat__icon"><i class="ti ti-chart-line"></i></div>
+        <div class="feat__name">Suivi de fiabilité</div>
+        <div class="feat__sub">Annulations, no-shows, régularité</div>
       </div>
     </div>
-  </div>
+    <div class="nav nav--start">
+      <button class="btn-cta" onclick="goTo(1)">
+        Commencer <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>
+  </section>
 
-  <div class="textarea-wrap">
-    <label class="flabel">Remarques ou précisions (optionnel)</label>
-    <textarea placeholder="Ex : le mercredi matin toujours dispo, jamais le week-end…" oninput="setN(1,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(0)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-1" onclick="goTo(2)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
+  <!-- ══════════════════════════════════════
+       STEP 1 — Disponibilités
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-1">
+    <p class="q__eyebrow">Question 1 / 10 · Planning</p>
+    <h2 class="q__title">Comment tu définis tes disponibilités ?</h2>
+    <p class="q__desc">Ce choix détermine l'architecture du module planning et la façon dont tes élèves consultent tes créneaux ouverts.</p>
 
-<!-- ══ Q2 : Collectifs ══ -->
-<div class="step" id="step-2">
-  <p class="q-eye">Question 2 / 10 · Cours collectifs</p>
-  <h2 class="q-title">Comment tu gères le nombre de participants ?</h2>
-  <p class="q-desc">Détermine la logique de réservation pour les cours collectifs et l'affichage des places restantes.</p>
-  <div id="opts-2">
-    <div class="option" onclick="sel(2,'global','Nombre maximum fixe pour tous les collectifs',this);showX('x2')">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Nombre fixe global</div><div class="opt-s">Ex : toujours 4 élèves maximum, quel que soit le type de cours collectif</div></div>
-    </div>
-    <div class="option" onclick="sel(2,'partype','Nombre max défini par type de séance',this);hideX('x2')">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Selon le type de séance</div><div class="opt-s">Chaque type a sa propre limite (débutants = 4 max, perfectionnement = 6 max…)</div></div>
-    </div>
-    <div class="option" onclick="sel(2,'autre','Autre / cas particulier',this);hideX('x2')">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="extra" id="x2">
-    <label class="flabel">Nombre maximum de participants</label>
-    <input type="number" min="2" max="30" placeholder="Ex : 4" oninput="setX(2,this.value+' participants max')">
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Remarques ou précisions (optionnel)</label>
-    <textarea placeholder="Ex : 6 max pour les stages, 3 pour les séances découverte…" oninput="setN(2,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(1)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-2" onclick="goTo(3)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q3 : Stages ══ -->
-<div class="step" id="step-3">
-  <p class="q-eye">Question 3 / 10 · Stages</p>
-  <h2 class="q-title">Comment fonctionnent tes stages ?</h2>
-  <p class="q-desc">La structure du stage impacte directement la modélisation des données et le système de réservation.</p>
-  <div id="opts-3">
-    <div class="option" onclick="sel(3,'multijours','Plusieurs créneaux liés sur plusieurs jours',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Créneaux liés multi-jours</div><div class="opt-s">Un stage = un ensemble de séances groupées (ex : 3 matins consécutifs de 2h)</div></div>
-    </div>
-    <div class="option" onclick="sel(3,'unique','Réservation bloc unique avec durée étendue',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Réservation bloc unique</div><div class="opt-s">Un stage = une seule entrée dans le planning, avec une durée plus longue</div></div>
-    </div>
-    <div class="option" onclick="sel(3,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Précisions ou cas particuliers (optionnel)</label>
-    <textarea placeholder="Ex : stages de 3 jours, 2h le matin, max 6 participants, lieu différent…" oninput="setN(3,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(2)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-3" onclick="goTo(4)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q4 : Carnet de séances ══ -->
-<div class="step" id="step-4">
-  <p class="q-eye">Question 4 / 10 · Carnet de séances</p>
-  <h2 class="q-title">Comment un crédit est-il déduit du carnet de séances ?</h2>
-  <p class="q-desc">Une séance réalisée = un crédit consommé. La question est : est-ce automatique, ou tu valides toi-même le bon déroulement du cours avant que le système agisse ?</p>
-  <div id="opts-4">
-    <div class="option" onclick="sel(4,'auto','Automatique — le système déduit sans action de ma part',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Déduction automatique</div><div class="opt-s">À l'heure de fin de séance, le crédit est déduit sans que tu aies à intervenir</div></div>
-    </div>
-    <div class="option" onclick="sel(4,'notif','Je valide via une notification post-cours',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Validation post-cours</div><div class="opt-s">Tu reçois une notification Telegram après la séance — tu confirmes le bon déroulement, et le crédit est déduit</div></div>
-    </div>
-    <div class="option" onclick="sel(4,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Remarques ou précisions (optionnel)</label>
-    <textarea placeholder="Ex : automatique sauf pour les accompagnements parcours où je vérifie la durée réelle…" oninput="setN(4,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(3)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-4" onclick="goTo(5)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q5 : Types de carnets ══ -->
-<div class="step" id="step-5">
-  <p class="q-eye">Question 5 / 10 · Carnets de séances</p>
-  <h2 class="q-title">Quels types de carnets proposes-tu ?</h2>
-  <p class="q-desc">Sélectionne tous les types de carnets que tu utilises. Un élève peut avoir un carnet différent selon le type de séance pratiqué.</p>
-  <div id="opts-5">
-    <div class="option" onclick="multiSel(5,'indiv','Carnet individuel',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Carnet individuel</div><div class="opt-s">Crédits utilisables uniquement pour des cours en face-à-face</div></div>
-    </div>
-    <div class="option" onclick="multiSel(5,'collectif','Carnet collectif',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Carnet collectif</div><div class="opt-s">Crédits dédiés aux cours en groupe (tarif et quota distincts)</div></div>
-    </div>
-    <div class="option" onclick="multiSel(5,'stage','Carnet stage',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Carnet stage</div><div class="opt-s">Pour les stages multi-séances — souvent vendu comme un forfait</div></div>
-    </div>
-    <div class="option" onclick="multiSel(5,'parcours','Carnet accompagnement parcours',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Carnet accompagnement parcours</div><div class="opt-s">Spécifique à ce type de séance, souvent à tarif différent</div></div>
-    </div>
-    <div class="option" onclick="multiSel(5,'universel','Carnet universel (tous types)',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Carnet universel</div><div class="opt-s">Un seul carnet utilisable pour n'importe quel type de séance</div></div>
-    </div>
-    <div class="option" onclick="multiSel(5,'autre','Autre type de carnet',this);chk5()">
-      <div class="cbox"><i class="ti ti-check"></i></div>
-      <div><div class="opt-l">Autre type</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Précisions sur tes carnets (optionnel)</label>
-    <textarea placeholder="Ex : carnet de 10 séances individuelles à 450€, carnet collectif 8 séances à 200€…" oninput="setN(5,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(4)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-5" onclick="goTo(6)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q6 : Validité carnets ══ -->
-<div class="step" id="step-6">
-  <p class="q-eye">Question 6 / 10 · Carnets de séances</p>
-  <h2 class="q-title">Tes carnets ont-ils une date d'expiration ?</h2>
-  <p class="q-desc">Impacte la gestion des crédits dans le temps et les relances automatiques possibles.</p>
-  <div id="opts-6">
-    <div class="option" onclick="sel(6,'oui','Oui, avec date d\'expiration',this);chk6()">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Oui, ils expirent</div><div class="opt-s">Ex : carnet de 10 séances valable 3 mois à partir de l'attribution</div></div>
-    </div>
-    <div class="option" onclick="sel(6,'non','Non, validité illimitée',this);chk6()">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Non, sans limite de durée</div><div class="opt-s">Les crédits restent valables indéfiniment, sans date butoir</div></div>
-    </div>
-    <div class="option" onclick="sel(6,'asavoir','À définir ultérieurement',this);chk6()">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Pas encore décidé</div><div class="opt-s">On laisse cette règle ouverte pour l'instant</div></div>
-    </div>
-    <div class="option" onclick="sel(6,'autre','Autre / cas particulier',this);chk6()">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="sub-sep">
-    <p class="sub-lbl">Question complémentaire · Carnets simultanés</p>
-    <p class="q-desc" style="margin-bottom:1rem">Un élève peut-il avoir plusieurs carnets actifs en même temps ?</p>
-    <div id="opts-6b">
-      <div class="option" onclick="selSub('6b','multi','Oui, plusieurs carnets simultanés',this);chk6()">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Oui</div><div class="opt-s">Ex : un carnet individuel + un carnet collectif en parallèle</div></div>
+    <div class="options-group" id="opts-1">
+      <div class="option" onclick="selectOption(1,'recurrent','Plages récurrentes automatiques',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Plages récurrentes</div>
+          <div class="opt__sub">Ex : chaque mardi de 9h à 12h — le système génère automatiquement les créneaux</div>
+        </div>
       </div>
-      <div class="option" onclick="selSub('6b','single','Non, un seul carnet actif à la fois',this);chk6()">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Non, un seul actif</div><div class="opt-s">Le prochain carnet s'active après épuisement du précédent</div></div>
+      <div class="option" onclick="selectOption(1,'manuel','Saisie manuelle créneau par créneau',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Saisie manuelle</div>
+          <div class="opt__sub">Tu ajoutes tes créneaux un par un directement dans le calendrier</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(1,'mixte','Mode mixte — récurrences + ajouts manuels',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Les deux — mode mixte</div>
+          <div class="opt__sub">Base récurrente avec possibilité d'ajouter ou supprimer des créneaux ponctuels</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(1,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Remarques ou précisions (optionnel)</label>
-    <textarea placeholder="Ex : expiration 6 mois pour les stages, illimité pour le reste…" oninput="setN(6,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(5)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-6" onclick="goTo(7)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
 
-<!-- ══ Q7 : Annulations ══ -->
-<div class="step" id="step-7">
-  <p class="q-eye">Question 7 / 10 · Annulations & reports</p>
-  <h2 class="q-title">Qui peut annuler une réservation ?</h2>
-  <p class="q-desc">Détermine les permissions dans l'interface et les flux de notification entre toi et tes élèves.</p>
-  <div id="opts-7">
-    <div class="option" onclick="sel(7,'coach','Toi uniquement',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Le coach uniquement</div><div class="opt-s">L'élève doit te contacter directement pour toute annulation</div></div>
-    </div>
-    <div class="option" onclick="sel(7,'eleve','L\'élève uniquement',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">L'élève uniquement</div><div class="opt-s">L'élève peut annuler depuis son espace, tu es automatiquement notifié</div></div>
-    </div>
-    <div class="option" onclick="sel(7,'lesdeux','Les deux — coach et élève',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Les deux</div><div class="opt-s">Chaque partie peut annuler, une notification est envoyée à l'autre</div></div>
-    </div>
-    <div class="option" onclick="sel(7,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Délai limite + remarques (optionnel)</label>
-    <textarea placeholder="Ex : l'élève peut annuler jusqu'à 24h avant, au-delà c'est moi qui gère…" oninput="setN(7,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(6)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-7" onclick="goTo(8)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q8 : Accompagnement parcours ══ -->
-<div class="step" id="step-8">
-  <p class="q-eye">Question 8 / 10 · Types de séances</p>
-  <h2 class="q-title">Comment fonctionne l'accompagnement parcours ?</h2>
-  <p class="q-desc">Ce type de séance est propre au golf et nécessite une modélisation spécifique dans le planning.</p>
-  <div id="opts-8">
-    <div class="option" onclick="sel(8,'variable','Durée variable — sur un vrai parcours',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Durée variable</div><div class="opt-s">Accompagnement sur parcours réel, durée selon le nombre de trous (9 ou 18)</div></div>
-    </div>
-    <div class="option" onclick="sel(8,'fixe','Durée fixe prédéfinie',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Durée fixe</div><div class="opt-s">Séance cadrée dans le temps, traitée comme un cours classique dans le planning</div></div>
-    </div>
-    <div class="option" onclick="sel(8,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Précisions (optionnel)</label>
-    <textarea placeholder="Ex : 9 trous ≈ 3h, lieu du RDV au club, tarif différent du cours standard…" oninput="setN(8,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(7)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-8" onclick="goTo(9)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q9 : Interface élève ══ -->
-<div class="step" id="step-9">
-  <p class="q-eye">Question 9 / 10 · Interface client</p>
-  <h2 class="q-title">Comment tes élèves accèdent-ils à l'application ?</h2>
-  <p class="q-desc">Détermine l'architecture d'authentification et l'expérience utilisateur côté élève.</p>
-  <div id="opts-9">
-    <div class="option" onclick="sel(9,'compte','Espace dédié avec compte élève complet',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Compte élève complet</div><div class="opt-s">Email + mot de passe, accès à l'historique, crédits, planning et profil personnel</div></div>
-    </div>
-    <div class="option" onclick="sel(9,'lien','Lien de réservation unique sans inscription',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Lien unique sans compte</div><div class="opt-s">Un lien personnalisé envoyé par toi — réservation sans créer de compte</div></div>
-    </div>
-    <div class="option" onclick="sel(9,'mixte','Mode mixte selon l\'élève',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Les deux — mode mixte</div><div class="opt-s">Certains élèves ont un compte, d'autres reçoivent simplement un lien</div></div>
-    </div>
-    <div class="option" onclick="sel(9,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
-    </div>
-  </div>
-
-  <div class="sub-sep">
-    <p class="sub-lbl">Sous-question · Validation de séance sans compte</p>
-    <p class="q-desc" style="margin-bottom:1rem">Si un élève n'a pas de compte, comment confirmes-tu qu'une séance a bien eu lieu pour déclencher la déduction du crédit ?</p>
-    <div id="opts-9b">
-      <div class="option" onclick="selSub('9b','telegram','Notification Telegram avec bouton de confirmation',this)">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Notification Telegram</div><div class="opt-s">Tu reçois une alerte post-séance avec un bouton "Confirmer" / "Signaler un problème"</div></div>
-      </div>
-      <div class="option" onclick="selSub('9b','dashboard','Validation manuelle dans ton tableau de bord',this)">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Dashboard uniquement</div><div class="opt-s">Tu valides toi-même depuis ton interface de gestion, sans notification</div></div>
-      </div>
-      <div class="option" onclick="selSub('9b','lesdeux','Les deux — notif + dashboard',this)">
-        <div class="rdot"></div>
-        <div><div class="opt-l">Les deux</div><div class="opt-s">Notification Telegram + possibilité de valider depuis le dashboard</div></div>
+    <div class="sub-section">
+      <p class="sub-section__label">Sous-question · Type de séance et créneaux</p>
+      <p class="sub-section__desc">Un créneau disponible est-il associé à un type de séance, ou ton élève choisit le type lors de sa demande ?</p>
+      <div class="options-group" id="opts-1b">
+        <div class="option" onclick="selectSub('1b','type_fixe','Créneau typé (individuel, collectif…)',this,1)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Créneau typé</div>
+            <div class="opt__sub">Ce créneau = cours individuel. Cet autre = collectif. L'élève choisit selon ce qui est affiché.</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('1b','client_choisit','Créneau neutre — l\'élève choisit le type à la demande',this,1)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Créneau neutre</div>
+            <div class="opt__sub">Tout créneau dispo = toute demande possible. L'élève précise individuel ou collectif au moment de réserver.</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('1b','mixte_type','Les deux selon les créneaux',this,1)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Les deux selon les créneaux</div>
+            <div class="opt__sub">Certains créneaux sont réservés à un type, d'autres restent libres</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="textarea-wrap">
-    <label class="flabel">Remarques ou précisions (optionnel)</label>
-    <textarea placeholder="Ex : tous mes élèves réguliers auront un compte, les occasionnels reçoivent un lien…" oninput="setN(9,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(8)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-9" onclick="goTo(10)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
-  </div>
-</div>
-
-<!-- ══ Q10 : Volume ══ -->
-<div class="step" id="step-10">
-  <p class="q-eye">Question 10 / 10 · Volume d'activité</p>
-  <h2 class="q-title">Combien d'élèves actifs tu gères actuellement ?</h2>
-  <p class="q-desc">Permet de dimensionner les besoins et de prioriser les fonctionnalités selon ta réalité terrain.</p>
-  <div id="opts-10">
-    <div class="option" onclick="sel(10,'moins20','Moins de 20 élèves actifs',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Moins de 20 élèves</div><div class="opt-s">Activité ciblée — besoin de rigueur et de simplicité</div></div>
+    <div class="field-wrap">
+      <label class="field-label">Remarques ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : le mercredi matin toujours dispo, jamais le week-end…" oninput="setNotes(1, this.value)"></textarea>
     </div>
-    <div class="option" onclick="sel(10,'2050','Entre 20 et 50 élèves actifs',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">20 à 50 élèves</div><div class="opt-s">Volume significatif — l'automatisation fait vraiment la différence</div></div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(0)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-1" onclick="goTo(2)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
     </div>
-    <div class="option" onclick="sel(10,'plus50','Plus de 50 élèves actifs',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Plus de 50 élèves</div><div class="opt-s">Volume important — besoin d'outils d'analyse et d'automatisation avancés</div></div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STEP 2 — Collectifs
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-2">
+    <p class="q__eyebrow">Question 2 / 10 · Cours collectifs</p>
+    <h2 class="q__title">Comment tu gères le nombre de participants ?</h2>
+    <p class="q__desc">Détermine la logique de réservation pour les cours collectifs et l'affichage des places restantes.</p>
+
+    <div class="options-group" id="opts-2">
+      <div class="option" onclick="selectOption(2,'global','Nombre maximum fixe pour tous les collectifs',this);showExtra('extra-2')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Nombre fixe global</div>
+          <div class="opt__sub">Ex : toujours 4 élèves maximum, quel que soit le type de cours collectif</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(2,'partype','Nombre max défini par type de séance',this);hideExtra('extra-2')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Selon le type de séance</div>
+          <div class="opt__sub">Chaque type a sa propre limite (débutants = 4 max, perfectionnement = 6 max…)</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(2,'autre','Autre / cas particulier',this);hideExtra('extra-2')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
     </div>
-    <div class="option" onclick="sel(10,'autre','Autre / cas particulier',this)">
-      <div class="rdot"></div>
-      <div><div class="opt-l">Autre</div><div class="opt-s">Précise dans le champ ci-dessous</div></div>
+
+    <div class="extra" id="extra-2">
+      <label class="field-label">Nombre maximum de participants</label>
+      <input type="number" min="2" max="30" placeholder="Ex : 4" oninput="setExtraValue(2, this.value + ' participants max')">
     </div>
-  </div>
-  <div class="textarea-wrap">
-    <label class="flabel">Nombre de séances / semaine + remarques (optionnel)</label>
-    <textarea placeholder="Ex : 15 à 20 séances par semaine, plus en été…" oninput="setN(10,this.value)"></textarea>
-  </div>
-  <div class="nav">
-    <button class="btn-back" onclick="goTo(9)"><i class="ti ti-arrow-left"></i> Retour</button>
-    <button class="btn-next" id="btn-10" onclick="buildSum();goTo(11)" disabled>Voir le résumé <i class="ti ti-check"></i></button>
-  </div>
-</div>
 
-<!-- ══ SUMMARY ══ -->
-<div class="step" id="step-11">
-  <div class="sum-top">
-    <div class="sum-check"><i class="ti ti-check"></i></div>
-    <h2 class="sum-h">Cadrage complété</h2>
-    <p class="sum-sub">Résumé de tes réponses — prêt à alimenter la conception de CoachQG</p>
-  </div>
-  <div id="sum-cards"></div>
+    <div class="field-wrap">
+      <label class="field-label">Remarques ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : 6 max pour les stages, 3 pour les séances découverte…" oninput="setNotes(2, this.value)"></textarea>
+    </div>
 
-  <button class="btn-next" id="sendbtn" onclick="doSend()" style="width:100%;justify-content:center;margin-top:1.5rem;padding:13px;font-size:.95rem">
-    <i class="ti ti-send"></i> Envoyer les réponses
-  </button>
-  <div id="send-status" style="display:none;margin-top:.875rem;text-align:center;font-size:.8rem;color:var(--muted)"></div>
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(1)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-2" onclick="goTo(3)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
 
-  <button class="btn-copy" id="copybtn" onclick="doCopy()" style="margin-top:.75rem">
-    <i class="ti ti-clipboard"></i> Copier le JSON (backup)
-  </button>
-  <button class="restart" onclick="doRestart()">← Recommencer depuis le début</button>
-</div>
+  <!-- ══════════════════════════════════════
+       STEP 3 — Stages
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-3">
+    <p class="q__eyebrow">Question 3 / 10 · Stages</p>
+    <h2 class="q__title">Comment fonctionnent tes stages ?</h2>
+    <p class="q__desc">La structure du stage impacte directement la modélisation des données et le système de réservation.</p>
 
-</div><!-- /wrap -->
-<div class="footer"><strong>CoachQG</strong> · Document de cadrage confidentiel · Prototype non contractuel</div>
+    <div class="options-group" id="opts-3">
+      <div class="option" onclick="selectOption(3,'multijours','Plusieurs créneaux liés sur plusieurs jours',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Créneaux liés multi-jours</div>
+          <div class="opt__sub">Un stage = un ensemble de séances groupées (ex : 3 matins consécutifs de 2h)</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(3,'unique','Réservation bloc unique avec durée étendue',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Réservation bloc unique</div>
+          <div class="opt__sub">Un stage = une seule entrée dans le planning, avec une durée plus longue</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(3,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
 
-<script>
-const T=10;
-let cur=0;
-const A={};   // main answers: step -> {value,label,extra,notes}
-const S={};   // sub answers: key -> {value,label}
-const M={};   // multi-select: step -> Set of {value,label}
+    <div class="field-wrap">
+      <label class="field-label">Précisions ou cas particuliers (optionnel)</label>
+      <textarea placeholder="Ex : stages de 3 jours, 2h le matin, max 6 participants, lieu différent…" oninput="setNotes(3, this.value)"></textarea>
+    </div>
 
-const QL={
-  1:'Gestion des disponibilités',2:'Cours collectifs',3:'Format des stages',
-  4:'Déduction — carnet de séances',5:'Types de carnets',
-  6:'Validité des carnets',7:'Droit d\'annulation',
-  8:'Accompagnement parcours',9:'Accès élève',10:'Volume d\'activité'
-};
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(2)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-3" onclick="goTo(4)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
 
-function goTo(n){
-  document.getElementById('step-'+cur).classList.remove('on');
-  cur=n;document.getElementById('step-'+cur).classList.add('on');
-  upProg();window.scrollTo({top:0,behavior:'smooth'});
-}
+  <!-- ══════════════════════════════════════
+       STEP 4 — Carnet de séances
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-4">
+    <p class="q__eyebrow">Question 4 / 10 · Carnet de séances</p>
+    <h2 class="q__title">Comment un crédit est-il déduit du carnet ?</h2>
+    <p class="q__desc">Une séance réalisée = un crédit consommé. Est-ce automatique, ou tu valides toi-même le bon déroulement avant que le système agisse ?</p>
 
-function upProg(){
-  const pw=document.getElementById('pw');
-  if(cur===0||cur===11){pw.classList.remove('on');return}
-  pw.classList.add('on');
-  const p=Math.round((cur/T)*100);
-  document.getElementById('pfill').style.width=p+'%';
-  document.getElementById('plbl').textContent='Question '+cur+' / '+T;
-  document.getElementById('ppct').textContent=p+'%';
-}
+    <div class="options-group" id="opts-4">
+      <div class="option" onclick="selectOption(4,'auto','Déduction automatique à l\'heure de fin',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Déduction automatique</div>
+          <div class="opt__sub">À l'heure de fin de séance, le crédit est déduit sans intervention de ta part</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(4,'notif','Validation via notification Telegram post-cours',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Validation post-cours</div>
+          <div class="opt__sub">Tu reçois une notification Telegram après la séance — tu confirmes le bon déroulement, et le crédit est déduit</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(4,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
 
-// Radio select
-function sel(step,value,label,el){
-  A[step]={value,label,extra:A[step]?.extra,notes:A[step]?.notes};
-  document.getElementById('opts-'+step).querySelectorAll('.option').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');
-  const b=document.getElementById('btn-'+step);
-  if(b)b.disabled=false;
-}
+    <div class="field-wrap">
+      <label class="field-label">Remarques ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : automatique sauf accompagnements parcours où je vérifie la durée réelle…" oninput="setNotes(4, this.value)"></textarea>
+    </div>
 
-// Sub-answer (radio)
-function selSub(key,value,label,el){
-  S[key]={value,label};
-  document.getElementById('opts-'+key).querySelectorAll('.option').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');
-}
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(3)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-4" onclick="goTo(5)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
 
-// Multi-select (checkbox)
-function multiSel(step,value,label,el){
-  if(!M[step])M[step]=[];
-  const idx=M[step].findIndex(x=>x.value===value);
-  if(idx>=0){M[step].splice(idx,1);el.classList.remove('sel')}
-  else{M[step].push({value,label});el.classList.add('sel')}
-}
+  <!-- ══════════════════════════════════════
+       STEP 5 — Types de carnets (multi)
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-5">
+    <p class="q__eyebrow">Question 5 / 10 · Carnets de séances</p>
+    <h2 class="q__title">Quels types de carnets proposes-tu ?</h2>
+    <p class="q__desc">Sélectionne tous les types que tu utilises. Un élève peut avoir un carnet différent selon le type de séance pratiqué.</p>
 
-function setX(step,val){if(A[step])A[step].extra=val}
-function setN(step,val){if(A[step])A[step].notes=val;else{if(!A[step])A[step]={value:'',label:''};A[step].notes=val}}
+    <div class="options-group" id="opts-5">
+      <div class="option" onclick="toggleMulti(5,'indiv','Carnet individuel',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnet individuel</div>
+          <div class="opt__sub">Crédits utilisables uniquement pour des cours en face-à-face</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(5,'collectif','Carnet collectif',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnet collectif</div>
+          <div class="opt__sub">Crédits dédiés aux cours en groupe (tarif et quota distincts)</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(5,'stage','Carnet stage',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnet stage</div>
+          <div class="opt__sub">Pour les stages multi-séances — souvent vendu comme un forfait</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(5,'parcours','Carnet accompagnement parcours',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnet accompagnement parcours</div>
+          <div class="opt__sub">Spécifique à ce type de séance, souvent à tarif différent</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(5,'universel','Carnet universel — tous types',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnet universel</div>
+          <div class="opt__sub">Un seul carnet utilisable pour n'importe quel type de séance</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(5,'autre','Autre type de carnet',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Autre type</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
 
-function showX(id){document.getElementById(id).classList.add('on')}
-function hideX(id){document.getElementById(id).classList.remove('on')}
+    <div class="field-wrap">
+      <label class="field-label">Précisions sur tes carnets (optionnel)</label>
+      <textarea placeholder="Ex : carnet 10 séances indiv à 450€, carnet collectif 8 séances à 200€…" oninput="setNotes(5, this.value)"></textarea>
+    </div>
 
-// Q1 needs both main selection AND sub-answer
-function chk1(){
-  document.getElementById('btn-1').disabled=!(A[1]&&S['1b']);
-}
-// Override sel for Q1 to also check sub
-const _sel1orig=sel;
-function sel(step,value,label,el){
-  A[step]={value,label,extra:A[step]?.extra,notes:A[step]?.notes};
-  document.getElementById('opts-'+step).querySelectorAll('.option').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');
-  if(step===1){chk1();return}
-  const b=document.getElementById('btn-'+step);
-  if(b)b.disabled=false;
-}
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(4)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-5" onclick="goTo(6)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
 
-// Q5 multi-select: need ≥1
-function chk5(){
-  document.getElementById('btn-5').disabled=!M[5]||M[5].length===0;
-}
+  <!-- ══════════════════════════════════════
+       STEP 6 — Validité carnets
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-6">
+    <p class="q__eyebrow">Question 6 / 10 · Carnets de séances</p>
+    <h2 class="q__title">Tes carnets ont-ils une date d'expiration ?</h2>
+    <p class="q__desc">Impacte la gestion des crédits dans le temps et les relances automatiques possibles.</p>
 
-// Q6 needs main + sub
-function chk6(){
-  document.getElementById('btn-6').disabled=!(A[6]&&S['6b']);
-}
+    <div class="options-group" id="opts-6">
+      <div class="option" onclick="selectOption(6,'oui','Oui, avec date d\'expiration',this);checkGated(6,'6b')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Oui, ils expirent</div>
+          <div class="opt__sub">Ex : carnet de 10 séances valable 3 mois à partir de l'attribution</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(6,'non','Non, validité illimitée',this);checkGated(6,'6b')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Non, sans limite de durée</div>
+          <div class="opt__sub">Les crédits restent valables indéfiniment, sans date butoir</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(6,'asavoir','À définir ultérieurement',this);checkGated(6,'6b')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Pas encore décidé</div>
+          <div class="opt__sub">On laisse cette règle ouverte pour l'instant</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(6,'autre','Autre / cas particulier',this);checkGated(6,'6b')">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
 
-function buildSum(){
-  const c=document.getElementById('sum-cards');c.innerHTML='';
-  for(let i=1;i<=T;i++){
-    let label='';let ext='';
-    if(i===5){
-      if(!M[5]||!M[5].length)continue;
-      label=M[5].map(x=>x.label).join(', ');
-    } else {
-      if(!A[i]||!A[i].label)continue;
-      label=A[i].label;
-      if(A[i].extra)ext+=A[i].extra;
-      if(A[i].notes)ext+=(ext?' · ':'')+A[i].notes;
-    }
-    // sub answers
-    if(i===1&&S['1b'])ext+=(ext?' · ':'')+S['1b'].label;
-    if(i===6&&S['6b'])ext+=(ext?' · ':'')+S['6b'].label;
-    if(i===9&&S['9b'])ext+=(ext?' · ':'')+S['9b'].label;
-    if(A[i]?.notes&&i===5)ext+=(ext?' · ':'')+A[i].notes;
-    const d=document.createElement('div');d.className='ans-row';
-    d.innerHTML='<div style="flex:1"><div class="ans-q">'+QL[i]+'</div><div class="ans-a">'+label+'</div>'+(ext?'<div class="ans-ext">'+ext+'</div>':'')+'</div><div class="ans-tag">Q'+i+'</div>';
-    c.appendChild(d);
-  }
-}
+    <div class="sub-section">
+      <p class="sub-section__label">Question complémentaire · Carnets simultanés</p>
+      <p class="sub-section__desc">Un élève peut-il avoir plusieurs carnets actifs en même temps ?</p>
+      <div class="options-group" id="opts-6b">
+        <div class="option" onclick="selectSub('6b','multi','Oui, plusieurs carnets simultanés',this,6)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Oui</div>
+            <div class="opt__sub">Ex : un carnet individuel + un carnet collectif en parallèle</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('6b','single','Non, un seul carnet actif à la fois',this,6)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Non, un seul actif</div>
+            <div class="opt__sub">Le prochain carnet s'active après épuisement du précédent</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-async function doSend(){
-  const btn=document.getElementById('sendbtn');
-  const status=document.getElementById('send-status');
-  btn.disabled=true;
-  btn.innerHTML='<i class="ti ti-loader"></i> Envoi en cours…';
-  status.style.display='block';
-  status.textContent='';
+    <div class="field-wrap">
+      <label class="field-label">Remarques ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : expiration 6 mois pour les stages, illimité pour le reste…" oninput="setNotes(6, this.value)"></textarea>
+    </div>
 
-  const out=buildPayload();
-  // Flatten for Formspree (it reads flat key/value pairs best)
-  const flat={_subject:'CoachQG — Cadrage V1',generated:out.meta.generated};
-  for(const [k,v] of Object.entries(out.reponses)){
-    flat[k]=typeof v==='object'?JSON.stringify(v):v;
-  }
-  flat['json_complet']=JSON.stringify(out,null,2);
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(5)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-6" onclick="goTo(7)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
 
-  try{
-    const r=await fetch('https://formspree.io/f/mwvzwolj',{
-      method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},
-      body:JSON.stringify(flat)
-    });
-    if(r.ok){
-      btn.innerHTML='<i class="ti ti-check"></i> Réponses envoyées';
-      btn.style.background='var(--acc-h)';
-      status.innerHTML='✓ Reçu. Le JSON complet est aussi disponible via le bouton ci-dessous.';
-    } else {
-      throw new Error('Erreur '+r.status);
-    }
-  } catch(e){
-    btn.disabled=false;
-    btn.innerHTML='<i class="ti ti-send"></i> Réessayer';
-    status.textContent='Échec de l\'envoi ('+e.message+'). Utilise le bouton "Copier le JSON" ci-dessous.';
-  }
-}
+  <!-- ══════════════════════════════════════
+       STEP 7 — Annulations & Notifications
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-7">
+    <p class="q__eyebrow">Question 7 / 10 · Annulations</p>
+    <h2 class="q__title">Qui peut annuler une réservation ?</h2>
+    <p class="q__desc">Détermine les permissions dans l'interface et les flux de notification entre toi et tes élèves.</p>
 
-function buildPayload(){
-  const out={meta:{generated:new Date().toISOString(),projet:'CoachQG V1'},reponses:{}};
-  for(let i=1;i<=T;i++){
-    const key='Q'+i+'_'+QL[i].replace(/\s/g,'_').replace(/['\u2019\/\-]/g,'');
-    if(i===5){
-      if(M[5]&&M[5].length)out.reponses[key]={valeurs:M[5].map(x=>x.value),...(A[5]?.notes&&{notes:A[5].notes})};
-    } else {
-      if(!A[i]||!A[i].value)continue;
-      out.reponses[key]={valeur:A[i].value,libelle:A[i].label,...(A[i].extra&&{extra:A[i].extra}),...(A[i].notes&&{notes:A[i].notes})};
-    }
-  }
-  if(S['1b'])out.reponses.Q1b_Type_creneaux=S['1b'];
-  if(S['6b'])out.reponses.Q6b_Carnets_simultanes=S['6b'];
-  if(S['9b'])out.reponses.Q9b_Validation_sans_compte=S['9b'];
-  return out;
-}
+    <div class="options-group" id="opts-7">
+      <div class="option" onclick="selectOption(7,'coach','Le coach uniquement',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Toi uniquement</div>
+          <div class="opt__sub">L'élève doit te contacter directement pour toute annulation</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(7,'eleve','L\'élève uniquement',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">L'élève uniquement</div>
+          <div class="opt__sub">L'élève peut annuler depuis son espace, tu es automatiquement notifié</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(7,'lesdeux','Les deux — coach et élève',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Les deux</div>
+          <div class="opt__sub">Chaque partie peut annuler, une notification est envoyée à l'autre</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(7,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
 
-function doCopy(){
-  const out=buildPayload();
-  const txt=JSON.stringify(out,null,2);
-  navigator.clipboard.writeText(txt).then(()=>{
-    const b=document.getElementById('copybtn');
-    b.innerHTML='<i class="ti ti-check"></i> Copié dans le presse-papier';b.classList.add('ok');
-    setTimeout(()=>{b.innerHTML='<i class="ti ti-clipboard"></i> Copier les réponses (JSON)';b.classList.remove('ok')},2500);
-  }).catch(()=>{console.log(txt);alert('Réponses disponibles dans la console (F12)')});
-}
+    <div class="sub-section">
+      <p class="sub-section__label">Sous-question · Notification d'annulation</p>
+      <p class="sub-section__desc">Quand une annulation a lieu, qui doit être notifié et comment ?</p>
+      <div class="options-group" id="opts-7b">
+        <div class="option" onclick="selectSub('7b','telegram_coach','Toi via Telegram uniquement',this,null);enableNext(7)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Telegram uniquement</div>
+            <div class="opt__sub">Tu reçois une alerte Telegram à chaque annulation, quel qu'en soit l'auteur</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('7b','les_deux_notif','Les deux — toi par Telegram, l\'élève par SMS/email',this,null);enableNext(7)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Notification des deux côtés</div>
+            <div class="opt__sub">Si tu annules → l'élève reçoit une notification. Si l'élève annule → tu reçois une alerte Telegram.</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('7b','aucune','Pas de notification automatique',this,null);enableNext(7)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">Aucune notification</div>
+            <div class="opt__sub">Je gère la communication directement, sans alerte automatique</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function doRestart(){
-  for(let i=1;i<=T;i++){
-    delete A[i];delete M[i];
-    const b=document.getElementById('btn-'+i);if(b)b.disabled=true;
-    const o=document.getElementById('opts-'+i);
-    if(o)o.querySelectorAll('.option').forEach(e=>e.classList.remove('sel'));
-  }
-  ['1b','6b','9b'].forEach(k=>{
-    delete S[k];
-    const o=document.getElementById('opts-'+k);
-    if(o)o.querySelectorAll('.option').forEach(e=>e.classList.remove('sel'));
-  });
-  hideX('x2');hideX('x5');
-  goTo(1);
-}
-upProg();
-</script>
+    <div class="field-wrap">
+      <label class="field-label">Délai limite + remarques (optionnel)</label>
+      <textarea placeholder="Ex : l'élève peut annuler jusqu'à 24h avant, au-delà c'est moi qui gère…" oninput="setNotes(7, this.value)"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(6)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-7" onclick="goTo(8)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STEP 8 — Accompagnement parcours
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-8">
+    <p class="q__eyebrow">Question 8 / 10 · Types de séances</p>
+    <h2 class="q__title">Comment fonctionne l'accompagnement parcours ?</h2>
+    <p class="q__desc">Ce type de séance est propre au golf et nécessite une modélisation spécifique dans le planning.</p>
+
+    <div class="options-group" id="opts-8">
+      <div class="option" onclick="selectOption(8,'variable','Durée variable — sur un vrai parcours',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Durée variable</div>
+          <div class="opt__sub">Accompagnement sur parcours réel, durée selon le nombre de trous (9 ou 18)</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(8,'fixe','Durée fixe prédéfinie',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Durée fixe</div>
+          <div class="opt__sub">Séance cadrée dans le temps, traitée comme un cours classique dans le planning</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(8,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <p class="sub-section__label">Sous-question · Inclure en V1 ?</p>
+      <p class="sub-section__desc">L'accompagnement parcours doit-il faire partie de la première version de l'application ?</p>
+      <div class="options-group" id="opts-8v">
+        <div class="option" onclick="selectSub('8v','v1','Oui, inclure en V1',this,null);enableNext(8)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">V1 — inclure maintenant</div>
+            <div class="opt__sub">C'est un type de séance que j'utilise régulièrement, indispensable dès le départ</div>
+          </div>
+        </div>
+        <div class="option" onclick="selectSub('8v','v2','Non, reporter en V2',this,null);enableNext(8)">
+          <div class="radio"></div>
+          <div>
+            <div class="opt__label">V2 — reporter</div>
+            <div class="opt__sub">On simplifie la V1, l'accompagnement parcours peut attendre la prochaine version</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Précisions (optionnel)</label>
+      <textarea placeholder="Ex : 9 trous ≈ 3h, RDV au club, tarif différent du cours standard…" oninput="setNotes(8, this.value)"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(7)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-8" onclick="goTo(9)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STEP 9 — Inscription élève
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-9">
+    <p class="q__eyebrow">Question 9 / 10 · Interface élève</p>
+    <h2 class="q__title">Quelles infos sont obligatoires pour qu'un élève réserve ?</h2>
+    <p class="q__desc">À minima, un élève doit s'identifier pour pouvoir valider une réservation. Définis ce qui est strictement nécessaire.</p>
+
+    <div class="options-group" id="opts-9">
+      <div class="option" onclick="selectOption(9,'tel_seul','Numéro de téléphone uniquement',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Téléphone uniquement</div>
+          <div class="opt__sub">Le numéro suffit pour te contacter et confirmer la séance — c'est le minimum absolu</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(9,'tel_nom','Téléphone + prénom et nom',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Téléphone + nom complet</div>
+          <div class="opt__sub">Identification simple sans email — permet de créer une fiche élève basique</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(9,'tel_email_nom','Téléphone + email + nom complet',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Téléphone + email + nom</div>
+          <div class="opt__sub">Profil complet — permet les notifications email, l'historique et la connexion à un espace élève</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(9,'compte_complet','Compte élève complet avec mot de passe',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Compte élève complet</div>
+          <div class="opt__sub">Email + mot de passe — accès à l'historique, crédits et planning depuis un espace personnel</div>
+        </div>
+      </div>
+      <div class="option" onclick="selectOption(9,'autre','Autre / cas particulier',this)">
+        <div class="radio"></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Remarques ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : tous mes élèves réguliers ont déjà mon numéro, les nouveaux passent par un formulaire…" oninput="setNotes(9, this.value)"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(8)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-9" onclick="goTo(10)" disabled>Suivant <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STEP 10 — Dashboard KPIs (multi)
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-10">
+    <p class="q__eyebrow">Question 10 / 10 · Dashboard coach</p>
+    <h2 class="q__title">Quels indicateurs seraient utiles dans ton tableau de bord ?</h2>
+    <p class="q__desc">Sélectionne tout ce que tu voudrais voir en un coup d'œil pour piloter ton activité.</p>
+
+    <div class="options-group" id="opts-10">
+      <div class="option" onclick="toggleMulti(10,'fiabilite','Taux de fiabilité par élève (annulations, no-shows)',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Fiabilité des élèves</div>
+          <div class="opt__sub">Score par élève basé sur annulations de dernière minute, no-shows et reports fréquents</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'heures_type','Répartition des heures par type de séance',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Heures individuelles vs collectif</div>
+          <div class="opt__sub">Combien d'heures tu passes en cours indiv, collectif, stages, parcours…</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'taux_remplissage','Taux de remplissage des créneaux',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Taux de remplissage</div>
+          <div class="opt__sub">% de créneaux ouverts effectivement réservés sur une période donnée</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'eleves_actifs','Élèves les plus actifs du moment',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Élèves les plus actifs</div>
+          <div class="opt__sub">Classement de tes élèves par nombre de séances sur la période</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'carnets_expiration','Carnets proches de l\'expiration ou épuisement',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Carnets expirants</div>
+          <div class="opt__sub">Alertes sur les carnets bientôt vides ou proches de leur date d'expiration</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'reservations_semaine','Réservations de la semaine en cours',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Vue hebdomadaire</div>
+          <div class="opt__sub">Résumé des séances planifiées cette semaine avec statuts</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'credits_consommes','Crédits consommés vs attribués par période',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Crédits consommés</div>
+          <div class="opt__sub">Volume de crédits utilisés vs attribués — indicateur d'activité et de fidélisation</div>
+        </div>
+      </div>
+      <div class="option" onclick="toggleMulti(10,'autre','Autre indicateur',this)">
+        <div class="checkbox"><i class="ti ti-check"></i></div>
+        <div>
+          <div class="opt__label">Autre</div>
+          <div class="opt__sub">Précise dans le champ ci-dessous</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Autres indicateurs ou précisions (optionnel)</label>
+      <textarea placeholder="Ex : chiffre d'affaires mensuel, nombre de nouveaux élèves, durée moyenne des séances…" oninput="setNotes(10, this.value)"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" onclick="goTo(9)"><i class="ti ti-arrow-left"></i> Retour</button>
+      <button class="btn-next" id="btn-next-10" onclick="buildSummary();goTo(11)" disabled>
+        Voir le résumé <i class="ti ti-check"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STEP 11 — Summary
+  ══════════════════════════════════════ -->
+  <section class="step" id="step-11">
+    <div class="summary__top">
+      <div class="summary__check"><i class="ti ti-check"></i></div>
+      <h2 class="summary__title">Cadrage complété</h2>
+      <p class="summary__sub">Résumé de tes réponses — prêt à alimenter la conception de CoachQG</p>
+    </div>
+
+    <div id="summary-cards"></div>
+
+    <button class="btn-send" id="btn-send" onclick="sendAnswers()">
+      <i class="ti ti-send"></i> Envoyer les réponses
+    </button>
+    <p class="send-status" id="send-status"></p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <strong>CoachQG</strong> · Document de cadrage confidentiel · Prototype non contractuel
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
